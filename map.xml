@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<map proto="1.3.3">
+	<name>Yumenoato</name>
+	<version>0.1.0</version>
+	<objective>敵を殲滅せよ/killing your enemy</objective>
+
+	<authors>
+		<author>EEE</author>
+	</authors>
+
+	<teams>
+		<team max="16" color="blue">Blue Team</team>
+		<team max="16" color="red">Orange Team</team>
+	</teams>
+	
+	<score>
+		<time>300</time><!-- 時間(秒) -->
+		<limit>100</limit>!-- スコアの上限 -->
+	</score>
+	
+	<!-- 初期装備 -->
+	<kits>
+		<kit name="default">
+			<!-- 装備 -->			
+			<!-- ホットバー -->
+			<item slot="2" amount="1" bind="true">Arrow</item>
+			
+			<!--ポーション効果 -->
+			<potion duration="oo" amplifier="0">Speed</potion>
+			<potion duration="oo" amplifier="-200">Hunger</potion>
+			<potion duration="oo" amplifier="3">Damage Resistance</potion>
+		</kit>
+	
+	<!-- チームごとの初期装備 -->
+		<kit name="blue" parents="default">
+			<!-- 装備 -->
+			<helmet color="0000ff" damage="-3000" locked="true">Leather Helmet</helmet>
+			<chestplate color="0000ff" damage="-3000" locked="true">Leather Chestplate</chestplate>
+		</kit>
+		<kit name="orange" parents="default">
+			<!-- 装備 -->
+			<helmet color="ff8800" damage="-3000" locked="true">Leather Helmet</helmet>
+			<chestplate color="ff8800" damage="-3000" locked="true">Leather Chestplate</chestplate>
+		</kit>
+		<kit name="rage">
+			<item slot="0" enchantment="Damage All:4">Diamond Sword</item>
+			<item slot="1" enchantment="Arrow Damage:4">Bow</item>
+			<potion duration="oo" amplifier="-50">Damage Resistance</potion>
+		</kit>
+	</kits>
+
+	<!-- スポーン位置 -->
+	<spawns>
+		<spawn team="blue" yaw="180" kit="blue">
+			<cuboid min="-1,12,96 " max="-2,12,101"/>
+		</spawn>
+		<spawn team="orange" yaw="0" kit="orange">
+			<cuboid min="-1,12,-100 " max="2,12,-95"/>
+		</spawn>
+		<default yaw="180">
+			<cuboid min="-2,17,-1" max="3,17,2"/>
+		</default>
+	</spawns>
+
+
+	<!-- フィルター定義 -->
+	<filters>
+		<filter name="only-blue" parents="deny-players deny-world deny-blocks">
+			<allow>
+				<team>blue</team>
+			</allow>
+		</filter>
+		<filter name="only-orange" parents="deny-players deny-world deny-blocks">
+			<allow>
+				<team>orange</team>
+			</allow>
+		</filter>
+	</filters>
+
+	<!-- 領域定義 -->
+	<regions>
+		<!-- RAGEを適用 -->
+		<apply kit="rage">
+			<cuboid min="-12,8,-94" max="13,8,-88"/>
+			<cuboid min="-12,8,89" max="13,8,95"/>			
+		</apply>
+
+		<!-- ジャンプ台(陣地から見て左,手前側からナンバリング) -->
+		<!-- ジャンプ台領域 -->
+		<union name="jump-area">
+			<cuboid name="jump-orange-1" min="8,4,-85" max="11,4,-84"/>
+			<cuboid name="jump-orange-2" min="-10,4,-85" max="-7,4,-84"/>
+			<cuboid name="jump-orange-3" min="41,27,-41" max="44,27,-40"/>
+			<cuboid name="jump-orange-4" min="-43,27,-41" max="-40,27,-40"/>
+			<cuboid name="jump-orange-5" min="24,7,-34" max="26,7,-31"/>
+			<cuboid name="jump-orange-6" min="-1,7,-26" max="2,7,-25"/>
+			<cuboid name="jump-orange-7" min="-25,7,-34" max="-23,7,-31"/>
+			<cuboid name="jump-orange-8" min="-21,16,-1" max="-19,16,2"/>
+
+			<cuboid name="jump-blue-1" min="-10,4,85" max="-7,4,86"/>
+			<cuboid name="jump-blue-2" min="8,4,85" max="11,4,86"/>
+			<cuboid name="jump-blue-3" min="-43,27,41" max="-40,27,42"/>
+			<cuboid name="jump-blue-4" min="41,27,41" max="44,27,42"/>
+			<cuboid name="jump-blue-5" min="-25,7,32" max="-23,7,35"/>
+			<cuboid name="jump-blue-6" min="-1,7,26" max="2,7,27"/>
+			<cuboid name="jump-blue-7" min="24,7,32" max="26,7,35"/>
+			<cuboid name="jump-blue-8" min="20,16,-1" max="22,16,2"/>
+
+			<cuboid name="jump-center-1" min="-5,20,-3" max="-3,20,-1"/>
+			<cuboid name="jump-center-2" min="4,20,-3" max="6,20,-1"/>
+			<cuboid name="jump-center-3" min="4,20,2" max="6,20,4"/>
+			<cuboid name="jump-center-4" min="-5,20,2" max="-3,20,4"/>
+		</union>
+		<!-- 赤チーム側ジャンプ台 -->
+		<apply velocity="0,12,23">
+			<region name="jump-orange-1"/>
+		</apply>
+		<apply velocity="0,12,23">
+			<region name="jump-orange-2"/>
+		</apply>
+		<apply velocity="0,3,4">
+			<region name="jump-orange-3"/>
+		</apply>
+		<apply velocity="0,3,4">
+			<region name="jump-orange-4"/>
+		</apply>
+		<apply velocity="1,17,-1">
+			<region name="jump-orange-5"/>
+		</apply>
+		<apply velocity="0,4,2">
+			<region name="jump-orange-6"/>
+		</apply>
+		<apply velocity="-1,17,-1">
+			<region name="jump-orange-7"/>
+		</apply>
+		<apply velocity="3,2,0">
+			<region name="jump-orange-8"/>
+		</apply>
+		<!-- 青チーム側ジャンプ台 -->
+		<apply velocity="0,12,-23">
+			<region name="jump-blue-1"/>
+		</apply>
+		<apply velocity="0,12,-23">
+			<region name="jump-blue-2"/>
+		</apply>
+		<apply velocity="0,3,-4">
+			<region name="jump-blue-3"/>
+		</apply>
+		<apply velocity="0,3,-4">
+			<region name="jump-blue-4"/>
+		</apply>
+		<apply velocity="-1,17,1">
+			<region name="jump-blue-5"/>
+		</apply>
+		<apply velocity="0,4,-2">
+			<region name="jump-blue-6"/>
+		</apply>
+		<apply velocity="1,17,1">
+			<region name="jump-blue-7"/>
+		</apply>
+		<apply velocity="-3,2,0">
+			<region name="jump-blue-8"/>
+		</apply>
+		<!-- 中央ジャンプ台 -->
+		<apply velocity="-20,5,-20">
+			<region name="jump-center-1"/>
+		</apply>
+		<apply velocity="20,5,-20">
+			<region name="jump-center-2"/>
+		</apply>
+		<apply velocity="20,5,20">
+			<region name="jump-center-3"/>
+		</apply>
+		<apply velocity="-20,5,20">
+			<region name="jump-center-4"/>
+		</apply>
+
+		<!-- 陣地の定義 -->
+		<cuboid name="blue-base" min="-3,4,95" max="4,14,105"/>
+		<union name="blue-wool">
+			<rectangle min="46,97" max="59,106"/>
+			<rectangle min="51,84" max="57,97"/>
+			<rectangle min="-58,97" max="-45,106"/>
+			<rectangle min="-56,84" max="-50,97"/>
+		</union>
+		<union name="blue-wool-room">
+			<cuboid min="47,5,98" max="58,9,105"/>
+			<cuboid min="-57,5,98" max="-46,9,105"/>
+		</union>
+
+		<cuboid name="orange-base" min="-3,4,-104" max="4,14,-94"/>
+		<union name="orange-wool">
+			<rectangle min="-58,-105" max="-45,-96"/>
+			<rectangle min="-56,-96" max="-50,-83"/>
+			<rectangle min="59,-105" max="46,-96"/>
+			<rectangle min="51,-96" max="57,-83"/>
+		</union>
+		<union name="orange-wool-room">
+			<cuboid min="-57,5,-104" max="-47,9,-97"/>
+			<cuboid min="47,5,-104" max="58,9,-97"/>
+		</union>
+
+		<!-- 陣地内へ侵入の禁止 -->
+		<apply enter="only-blue" message="敵の本拠地に入る事は出来ません。 / You may not enter enemy base.">
+			<region name="blue-base"/>
+		</apply>
+		<apply enter="only-orange" message="敵の本拠地に入る事は出来ません。 / You may not enter enemy base.">
+			<region name="orange-base"/>
+		</apply>
+
+		<!-- 羊毛部屋への新入の禁止 -->
+		<apply enter="only-orange" message="敵の羊毛部屋に入る事は出来ません。 / You may not enter enemy wool room.">
+			<region name="blue-wool"/>
+		</apply>
+		<apply enter="only-blue" message="敵の羊毛部屋に入る事は出来ません。 / You may not enter enemy wool room.">
+			<region name="orange-wool"/>
+		</apply>
+
+		<!-- 地形編集の無効化 -->
+		<apply block="deny-all" message="地形の編集はできません。">
+			<negative>
+				<cuboid min="0,0,0" max="0,0,0"/>
+			</negative>
+		</apply>
+	</regions>
+	<portals>
+		<!-- オレンジチームポータル -->
+		<portal x="@0" y="@12" z="@-101" yaw="0">
+			<region name="blue-wool-room"/>
+		</portal>
+		<!-- 青チームポータル -->
+		<portal x="@0" y="@12" z="@100" yaw="180">
+			<region name="orange-wool-room"/>
+		</portal>
+	</portals>
+	<score>
+		<time>300</time>
+		<box value="5" team="blue" filter="only-blue" cooldown="1">
+			<region name="orange-wool-room"/>
+		</box>
+		<box value="5" team="red" filter="only-orange" cooldown="1">
+			<region name="blue-wool-room"/>
+		</box>
+	</score>
+
+	<!-- itemremove -->
+	<itemremove>
+		<item>Diamond Sword</item>
+		<item>Bow</item>
+		<item>Arrow</item>
+		<item>Leather Helmet</item>
+		<item>Leather Chestplate</item>
+	</itemremove>
+
+	<!-- キル報酬 -->
+	<killreward>
+		<item amount="1" bind="true">Arrow</item>
+	</killreward>
+
+	<!--  落下ダメージ無効  -->
+	<disabledamage>
+		<damage>fall</damage>
+	</disabledamage>
+
+	<script src="map.js"/>
+
+	<!-- チュートリアル -->	
+	<include src="tutorial.xml"/>
+	<tutorial>
+		<stage title="Team Death Match (TDM)">
+			<title lang="ja_JP">チームデスマッチ(TDM)</title>
+			<message>
+				<line>This map is a `a`lTeam Deathmatch `r(TDM) map.</line>
+				<line>The objective is killing the other team's player.</line>
+				<line>You can kill enemies only `a`lone hit(RAGE)`r.</line>
+			</message>
+			<message lang="ja_JP">
+				<line>このマップは`a`lTeam Deathmatch `r(TDM)マップです。</line>
+				<line>相手チームのプレイヤーをより多く倒すことが目標になります。</line>
+				<line>このマップでは`a`l一撃で敵を倒すことができます(RAGE)`r。</line>
+			</message>
+		</stage>
+		<stage title="Falling Damage">
+			<title lang="ja_JP">落下ダメージ</title>
+			<message>
+				<line>Falling damage is disabled in this map.</line>
+			</message>
+			<message lang="ja_JP">
+				<line>このmapでは落下ダメージが無効になります。</line>
+			</message>
+		</stage>
+		<!-- ジャンプ台の説明 -->
+		<stage title="jump-pad">
+			<title lang="ja_JP">ジャンプ台</title>
+			<message>
+				<line>These emerald blocks are jump pads.</line>
+				<line>You can jump to other place by using these.</line>
+			</message>
+			<message lang="ja_JP">
+				<line>エメラルドブロックはジャンプ台です。</line>
+				<line>乗ると他の足場へと大きくジャンプして移動できます。</line>
+			</message>
+			<teleport>
+				<point yaw="0" pitch="15">9,5,-88</point>
+			</teleport>
+		</stage>
+		<!-- スコアボックスの説明 -->
+		<stage title="Scoreboxes">
+			<title lang="ja_JP">スコアボックス</title>
+			<message>
+				<line>There is area called a scorebox in this map.</line>
+				<line>The area is on the corner of enemy side.</line>
+				<line>Highscore can be gained at once by arriving at scorebox.</line>
+			</message>
+			<message lang="ja_JP">
+				<line>このマップにはスコアボックスというエリアがあります。</line>
+				<line>敵チーム側の隅の方にそのエリアがあります。</line>
+				<line>スコアボックスに到達することにより一度に高得点を獲得する事が出来ます。</line>
+			</message>
+			<teleport>
+				<point yaw="-90" pitch="20">40,11,-100</point>
+			</teleport>
+		</stage>
+	</tutorial>
+</map>
