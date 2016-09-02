@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <map proto="1.3.3">
 	<name>Yumenoato</name>
-	<version>0.1.2</version>
+	<version>0.1.3</version>
 	<objective>敵を殲滅せよ/killing your enemy</objective>
 
 	<authors>
@@ -42,16 +42,8 @@
 			<chestplate color="ff8800" damage="-3000" locked="true">Leather Chestplate</chestplate>
 		</kit>
 		<kit name="rage">
-			<item slot="0" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="1" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="2" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="3" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="4" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="5" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="6" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="7" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<item slot="8" enchantment="Arrow Damage:4" damage="-3000" locked="true">Bow</item>
-			<potion duration="oo" amplifier="-200">Damage Resistance</potion>
+			<item slot="0" enchantment="Damage All:5;Arrow Damage:5" locked="true">Bow</item>
+			<potion duration="oo" amplifier="-60">Damage Resistance</potion>
 		</kit>
 	</kits>
 
@@ -207,7 +199,7 @@
 		</union>
 
 		<!-- 陣地内へ侵入の禁止 -->
-		<apply enter="only-blue" message="敵の本拠地に入る事は出来ません。 / You may not enter enemy base.">
+		<apply enter="only-blue" message="敵の本拠地に入る事は出来ません。/ You may not enter enemy base.">
 			<region name="blue-base"/>
 		</apply>
 		<apply enter="only-orange" message="敵の本拠地に入る事は出来ません。 / You may not enter enemy base.">
@@ -223,7 +215,7 @@
 		</apply>
 
 		<!-- 地形編集の無効化 -->
-		<apply block="deny-all" message="地形の編集はできません。">
+		<apply block="deny-all" message="地形の編集はできません。/You may not modify blocks in this map.">
 			<negative>
 				<cuboid min="0,0,0" max="0,0,0"/>
 			</negative>
